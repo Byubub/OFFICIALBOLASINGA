@@ -1,1 +1,499 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyLinkTree - Profil Social Media</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #F05032;
+            --accent: #00cec9;
+            --dark: #2d3436;
+            --light: #42D4E3;
+            --text-dark: #2d3436;
+            --text-light: #f5f6fa;
+            --bg-light: #ffffff;
+            --bg-dark: #1a1a2e;
+            --card-light: #ffffff;
+            --card-dark: #2d3436;
+        }
 
+        [data-theme="light"] {
+            --bg-color: var(--bg-light);
+            --text-color: var(--text-dark);
+            --card-bg: var(--card-light);
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: var(--bg-dark);
+            --text-color: var(--text-light);
+            --card-bg: var(--card-dark);
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-1height: 1.6;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 25% 25%, var(--primary) 0%, transparent 25%),
+                radial-gradient(circle at 75% 75%, var(--secondary) 0%, transparent 25%);
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary);
+            margin: 0 auto 20px;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .profile-name {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .profile-bio {
+            font-size: 16px;
+            color: var(--text-color);
+            opacity: 0.8;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* Follow Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .stat-number {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        /* Links Section */
+        .links-section {
+            margin-bottom: 30px;
+        }
+
+        .link-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            box-shadow: 0 4px 12px var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .link-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow);
+        }
+
+        .link-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        .link-content {
+            flex: 1;
+        }
+
+        .link-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 5px;
+        }
+
+        .link-description {
+            font-size: 12px;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-button {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .whatsapp-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px var(--shadow);
+            z-index: 100;
+            border: 2px solid var(--primary);
+        }
+
+        .theme-toggle i {
+            font-size: 20px;
+            color: var(--primary);
+        }
+
+        /* Social Media */
+        .social-media {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-color);
+            font-size: 18px;
+            text-decoration: none;
+            box-shadow: 0 4px 12px var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px var(--shadow);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            opacity: 0.7;
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+
+            .profile-image {
+                width: 100px;
+                height: 100px;
+            }
+
+            .profile-name {
+                font-size: 24px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+    </style>
+</head>
+<body data-theme="light">
+    <!-- Theme Toggle -->
+    <div class="theme-toggle fade-in" onclick="toggleTheme()">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <div class="container">
+        <!-- Profile Section -->
+        <section class="profile-section fade-in">
+            <img src="https://i.postimg.cc/FzBQvsdc/akwodaeawada.jpg" 
+                 alt="Foto profil profesional content creator" class="profile-image">
+            <h1 class="profile-name">BOLA SINGA</h1>
+            <p class="profile-bio">PUSAT GAME TERPERCAYA SE-ASIA</p>
+
+            
+            <div class="badges">
+                <span class="badge">Content Creator</span>
+                <span class="badge">Social Media</span>
+                <span class="badge">Digital Marketing</span>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <div class="stats fade-in delay-1">
+            <div class="stat-item">
+                <div class="stat-number">12.5K</div>
+                <div class="stat-label">Followers</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">245</div>
+                <div class="stat-label">Posts</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">3.2M</div>
+                <div class="stat-label">Views</div>
+            </div>
+        </div>
+
+        <!-- Links Section -->
+        <section class="links-section">
+            <a href="https://shortq.org/singaapp" class="link-card fade-in delay-2" target="_blank">
+                <div class="link-icon" style="background: linear-gradient(135deg, #FF0000, #FF5E5E);">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="link-content">
+                    <div class="link-title">APLIKASI BOLA SINGA</div>
+                    <div class="link-description">AKSES MUDAH DENGAN APLIKASI</div>
+                </div>
+            </a>
+
+            <a href="https://www.facebook.com/profile.php?id=61581006234271" class="link-card fade-in delay-3" target="_blank">
+                <div class="link-icon" style="background: linear-gradient(135deg, #E1306C, #F77737);">
+                    <i class="fab fa-facebook"></i>
+                </div>
+                <div class="link-content">
+                    <div class="link-title">FACEBOOK</div>
+                    <div class="link-description">OFFICIAL BOLA SINGA</div>
+                </div>
+            </a>
+
+            <a href="https://www.instagram.com/bolasinganew_/" class="link-card fade-in delay-4" target="_blank">
+                <div class="link-icon" style="background: linear-gradient(135deg, #000000, #25F4EE);">
+                    <i class="fab fa-instagram"></i>
+                </div>
+                <div class="link-content">
+                    <div class="link-title">INSTAGRAM</div>
+                    <div class="link-description">OFFICIAL BOLA SINGA</div>
+                </div>
+            </a>
+
+            <a href="https://rtp.akuratbolasinga.xyz/" class="link-card fade-in delay-5" target="_blank">
+                <div class="link-icon" style="background: linear-gradient(135deg, #1DB954, #1ED760);">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <div class="link-content">
+                    <div class="link-title">RTP SLOT GACOR</div>
+                    <div class="link-description">RTP TERBAIK BOLA SINGA</div>
+                </div>
+            </a>
+        </section>
+
+        <!-- WhatsApp Button -->
+        <div class="fade-in delay-4" style="text-align: center; margin: 20px 0;">
+            <a href="https://api.whatsapp.com/send/?phone=6287737477711&text&type=phone_number&app_absent=0" 
+               class="whatsapp-button" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+                Hubungi via WhatsApp
+            </a>
+        </div>
+
+        <!-- Social Media Icons -->
+        <div class="social-media fade-in delay-5">
+            <a href="https://facebook.com" class="social-icon" target="_blank">
+                <i class="fab fa-playstation"></i>
+            </a>
+            <a href="https://twitter.com" class="social-icon" target="_blank">
+                <i class="fab fa-steam"></i>
+            </a>
+            <a href="https://linkedin.com" class="social-icon" target="_blank">
+                <i class="fab fa-xbox"></i>
+            </a>
+            <a href="https://github.com" class="social-icon" target="_blank">
+                <i class="fab fa-twitch"></i>
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer fade-in delay-5">
+            <p>ZAROBI PENTIL HITAM</p>
+            <p>DIBUAT DENGAN CINTA ZAROBI</p>
+        </footer>
+    </div>
+
+    <script>
+        // Theme Toggle Function
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.querySelector('.theme-toggle i');
+            
+            if (body.getAttribute('data-theme') === 'light') {
+                body.setAttribute('data-theme', 'dark');
+                themeToggle.classList.remove('fa-moon');
+                themeToggle.classList.add('fa-sun');
+            } else {
+                body.setAttribute('data-theme', 'light');
+                themeToggle.classList.remove('fa-sun');
+                themeToggle.classList.add('fa-moon');
+            }
+            
+            // Save theme preference to localStorage
+            localStorage.setItem('theme', body.getAttribute('data-theme'));
+        }
+
+        // Load saved theme preference
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeToggle = document.querySelector('.theme-toggle i');
+            
+            if (savedTheme) {
+                document.body.setAttribute('data-theme', savedTheme);
+                if (savedTheme === 'dark') {
+                    themeToggle.classList.remove('fa-moon');
+                    themeToggle.classList.add('fa-sun');
+                }
+            }
+            
+            // Add click event to all links for animation
+            const links = document.querySelectorAll('.link-card, .social-icon, .whatsapp-button');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const href = this.href;
+                    
+                    // Add click animation
+                    this.style.transform = 'scale(0.95)';
+                    
+                    setTimeout(() => {
+                        window.open(href, '_blank');
+                        this.style.transform = '';
+                    }, 200);
+                });
+            });
+        });
+
+        // Simple animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
